@@ -23,6 +23,13 @@ func (ui *ConcurrentUI) Output(message string) {
 	ui.UI.Output(message)
 }
 
+// Success writes to writer
+func (ui *ConcurrentUI) Success(message string) {
+	ui.l.Lock()
+	defer ui.l.Unlock()
+	ui.UI.Success(message)
+}
+
 // Info writes to writer
 func (ui *ConcurrentUI) Info(message string) {
 	ui.l.Lock()

@@ -4,17 +4,19 @@ import "github.com/daviddengcn/go-colortext"
 
 // ColorUI is used to interface with the UI in color
 type ColorUI struct {
-	LogFGColor    ct.Color
-	OutputFGColor ct.Color
-	InfoFGColor   ct.Color
-	ErrorFGColor  ct.Color
-	WarnFGColor   ct.Color
-	LogBGColor    ct.Color
-	OutputBGColor ct.Color
-	InfoBGColor   ct.Color
-	ErrorBGColor  ct.Color
-	WarnBGColor   ct.Color
-	UI            UI
+	LogFGColor     ct.Color
+	OutputFGColor  ct.Color
+	SuccessFGColor ct.Color
+	InfoFGColor    ct.Color
+	ErrorFGColor   ct.Color
+	WarnFGColor    ct.Color
+	LogBGColor     ct.Color
+	OutputBGColor  ct.Color
+	SuccessBGColor ct.Color
+	InfoBGColor    ct.Color
+	ErrorBGColor   ct.Color
+	WarnBGColor    ct.Color
+	UI             UI
 }
 
 // Log prefixes timestamp and prints in color
@@ -28,6 +30,13 @@ func (ui *ColorUI) Log(message string) {
 func (ui *ColorUI) Output(message string) {
 	ct.ChangeColor(ui.OutputFGColor, false, ui.OutputBGColor, false)
 	ui.UI.Output(message)
+	ct.ResetColor()
+}
+
+// Success prints to writer in color
+func (ui *ColorUI) Success(message string) {
+	ct.ChangeColor(ui.SuccessFGColor, false, ui.SuccessBGColor, false)
+	ui.UI.Success(message)
 	ct.ResetColor()
 }
 

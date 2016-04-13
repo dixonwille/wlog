@@ -32,6 +32,11 @@ func (ui *BasicUI) Output(message string) {
 	fmt.Fprint(ui.Writer, "\n")
 }
 
+// Success writes to Writer in BasicUI
+func (ui *BasicUI) Success(message string) {
+	ui.Output(message)
+}
+
 // Info writes to Writer in BasicUI
 func (ui *BasicUI) Info(message string) {
 	ui.Output(message)

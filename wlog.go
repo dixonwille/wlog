@@ -21,26 +21,28 @@ func NewBasic(reader io.Reader, writer, errorWriter io.Writer) *BasicUI {
 }
 
 //NewColor returns a ColorUI for use
-func NewColor(outputColor ct.Color, errorColor ct.Color, ui UI) *ColorUI {
+func NewColor(successColor, warnColor, infoColor, errorColor ct.Color, ui UI) *ColorUI {
 	return &ColorUI{
-		LogFGColor:    outputColor,
-		LogBGColor:    ct.None,
-		OutputFGColor: outputColor,
-		OutputBGColor: ct.None,
-		InfoFGColor:   outputColor,
-		InfoBGColor:   ct.None,
-		ErrorFGColor:  errorColor,
-		ErrorBGColor:  ct.None,
-		WarnFGColor:   errorColor,
-		WarnBGColor:   ct.None,
-		UI:            ui,
+		LogFGColor:     ct.None,
+		LogBGColor:     ct.None,
+		OutputFGColor:  ct.None,
+		OutputBGColor:  ct.None,
+		SuccessFGColor: successColor,
+		SuccessBGColor: ct.None,
+		InfoFGColor:    infoColor,
+		InfoBGColor:    ct.None,
+		ErrorFGColor:   errorColor,
+		ErrorBGColor:   ct.None,
+		WarnFGColor:    warnColor,
+		WarnBGColor:    ct.None,
+		UI:             ui,
 	}
 }
 
 // New creates a UI that is concurrent and colorfull
-func New(reader io.Reader, writer, errorWriter io.Writer, outputColor ct.Color, errorColor ct.Color) UI {
+func New(reader io.Reader, writer, errorWriter io.Writer, successColor, warnColor, infoColor, errorColor ct.Color) UI {
 	basic := NewBasic(reader, writer, errorWriter)
-	color := NewColor(outputColor, errorColor, basic)
+	color := NewColor(successColor, warnColor, infoColor, errorColor, basic)
 	concurrent := NewConcurrent(color)
 	return concurrent
 }

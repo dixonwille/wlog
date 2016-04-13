@@ -7,13 +7,15 @@ type UI interface {
 	Log(string)
 	// Output is a standard output to screen.
 	Output(string)
+	// Success is exactly like Output just allows for different colors.
+	Success(string)
 	// Info is exactly like output.
-	// Reason for having two is to allow different colors or files.
+	// Reason for having two is to allow different colors.
 	Info(string)
 	// Error will write to ErrorWriter.
 	// This will not kill the program.
 	Error(string)
 	// Warn will write to ErrorWriter much like Error.
-	// Reason for having two is to allow different colors or files.
+	// Reason for having two is to allow different colors.
 	Warn(string)
 }
