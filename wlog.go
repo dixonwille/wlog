@@ -1,10 +1,6 @@
 package wlog
 
-import (
-	"io"
-
-	"github.com/daviddengcn/go-colortext"
-)
+import "io"
 
 //New returns a BasicUI for use
 func New(reader io.Reader, writer, errorWriter io.Writer) *BasicUI {
@@ -21,22 +17,22 @@ func AddConcurrent(ui UI) *ConcurrentUI {
 }
 
 //AddColor returns a ColorUI for use
-func AddColor(logColor, outputColor, successColor, infoColor, errorColor, warnColor, runningColor ct.Color, ui UI) *ColorUI {
+func AddColor(logColor, outputColor, successColor, infoColor, errorColor, warnColor, runningColor Color, ui UI) *ColorUI {
 	return &ColorUI{
 		LogFGColor:     logColor,
-		LogBGColor:     ct.None,
+		LogBGColor:     None,
 		OutputFGColor:  outputColor,
-		OutputBGColor:  ct.None,
+		OutputBGColor:  None,
 		SuccessFGColor: successColor,
-		SuccessBGColor: ct.None,
+		SuccessBGColor: None,
 		InfoFGColor:    infoColor,
-		InfoBGColor:    ct.None,
+		InfoBGColor:    None,
 		ErrorFGColor:   errorColor,
-		ErrorBGColor:   ct.None,
+		ErrorBGColor:   None,
 		WarnFGColor:    warnColor,
-		WarnBGColor:    ct.None,
+		WarnBGColor:    None,
 		RunningFGColor: runningColor,
-		RunningBGColor: ct.None,
+		RunningBGColor: None,
 		UI:             ui,
 	}
 }
