@@ -6,13 +6,8 @@ import (
 	"github.com/daviddengcn/go-colortext"
 )
 
-// NewConcurrent returns a new ConcurrentUI
-func NewConcurrent(ui UI) *ConcurrentUI {
-	return &ConcurrentUI{UI: ui}
-}
-
-//NewBasic returns a BasicUI for use
-func NewBasic(reader io.Reader, writer, errorWriter io.Writer) *BasicUI {
+//New returns a BasicUI for use
+func New(reader io.Reader, writer, errorWriter io.Writer) *BasicUI {
 	return &BasicUI{
 		Reader:      reader,
 		Writer:      writer,
@@ -20,8 +15,13 @@ func NewBasic(reader io.Reader, writer, errorWriter io.Writer) *BasicUI {
 	}
 }
 
-//NewColor returns a ColorUI for use
-func NewColor(successColor, warnColor, infoColor, errorColor ct.Color, ui UI) *ColorUI {
+// AddConcurrent returns a new ConcurrentUI
+func AddConcurrent(ui UI) *ConcurrentUI {
+	return &ConcurrentUI{UI: ui}
+}
+
+//AddColor returns a ColorUI for use
+func AddColor(successColor, warnColor, infoColor, errorColor ct.Color, ui UI) *ColorUI {
 	return &ColorUI{
 		LogFGColor:     ct.None,
 		LogBGColor:     ct.None,
@@ -39,10 +39,15 @@ func NewColor(successColor, warnColor, infoColor, errorColor ct.Color, ui UI) *C
 	}
 }
 
-// New creates a UI that is concurrent and colorfull
-func New(reader io.Reader, writer, errorWriter io.Writer, successColor, warnColor, infoColor, errorColor ct.Color) UI {
-	basic := NewBasic(reader, writer, errorWriter)
-	color := NewColor(successColor, warnColor, infoColor, errorColor, basic)
-	concurrent := NewConcurrent(color)
-	return concurrent
+// AddPrefix returns a PrefixUI for use
+func AddPrefix(logPre, outputPre, successPre, warnPre, infoPre, errorPre string, ui UI) *PrefixUI {
+	return &PrefixUI{
+		LogPrefix:     logPre,
+		OutputPrefix:  outputPre,
+		SuccessPrefix: successPre,
+		WarnPrefix:    warnPre,
+		InfoPrefix:    infoPre,
+		ErrorPrefix:   errorPre,
+		UI:            ui,
+	}
 }
