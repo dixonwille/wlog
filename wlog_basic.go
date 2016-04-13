@@ -19,7 +19,7 @@ type BasicUI struct {
 	ErrorWriter io.Writer
 }
 
-// Log writes to screen with date-time prefixed
+// Log writes to Writer with Date-Time prefixed
 func (ui *BasicUI) Log(message string) {
 	timeString := time.Now().Format(timeFormat)
 	message = timeString + ": " + message
@@ -56,4 +56,9 @@ func (ui *BasicUI) Error(message string) {
 // Warn writes to Error in BasicUI
 func (ui *BasicUI) Warn(message string) {
 	ui.Error(message)
+}
+
+// Running writes to Writer in BasicUI
+func (ui *BasicUI) Running(message string) {
+	ui.Output(message)
 }

@@ -50,3 +50,10 @@ func (ui *ConcurrentUI) Warn(message string) {
 	defer ui.l.Unlock()
 	ui.UI.Warn(message)
 }
+
+// Running writes to writer
+func (ui *ConcurrentUI) Running(message string) {
+	ui.l.Lock()
+	defer ui.l.Unlock()
+	ui.UI.Running(message)
+}

@@ -10,12 +10,14 @@ type ColorUI struct {
 	InfoFGColor    ct.Color
 	ErrorFGColor   ct.Color
 	WarnFGColor    ct.Color
+	RunningFGColor ct.Color
 	LogBGColor     ct.Color
 	OutputBGColor  ct.Color
 	SuccessBGColor ct.Color
 	InfoBGColor    ct.Color
 	ErrorBGColor   ct.Color
 	WarnBGColor    ct.Color
+	RunningBGColor ct.Color
 	UI             UI
 }
 
@@ -58,5 +60,12 @@ func (ui *ColorUI) Error(message string) {
 func (ui *ColorUI) Warn(message string) {
 	ct.ChangeColor(ui.WarnFGColor, false, ui.WarnBGColor, false)
 	ui.UI.Warn(message)
+	ct.ResetColor()
+}
+
+// Running prints to writer in color
+func (ui *ColorUI) Running(message string) {
+	ct.ChangeColor(ui.RunningFGColor, false, ui.RunningBGColor, false)
+	ui.UI.Running(message)
 	ct.ResetColor()
 }

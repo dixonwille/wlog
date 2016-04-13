@@ -8,6 +8,7 @@ type PrefixUI struct {
 	InfoPrefix    string
 	ErrorPrefix   string
 	WarnPrefix    string
+	RunningPrefix string
 	UI            UI
 }
 
@@ -57,4 +58,12 @@ func (ui *PrefixUI) Warn(message string) {
 		message = ui.WarnPrefix + " " + message
 	}
 	ui.UI.Warn(message)
+}
+
+// Running prefixs and writes to running
+func (ui *PrefixUI) Running(message string) {
+	if ui.RunningPrefix != "" {
+		message = ui.RunningPrefix + " " + message
+	}
+	ui.UI.Running(message)
 }

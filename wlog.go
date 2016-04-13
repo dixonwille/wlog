@@ -21,11 +21,11 @@ func AddConcurrent(ui UI) *ConcurrentUI {
 }
 
 //AddColor returns a ColorUI for use
-func AddColor(successColor, warnColor, infoColor, errorColor ct.Color, ui UI) *ColorUI {
+func AddColor(logColor, outputColor, successColor, infoColor, errorColor, warnColor, runningColor ct.Color, ui UI) *ColorUI {
 	return &ColorUI{
-		LogFGColor:     ct.None,
+		LogFGColor:     logColor,
 		LogBGColor:     ct.None,
-		OutputFGColor:  ct.None,
+		OutputFGColor:  outputColor,
 		OutputBGColor:  ct.None,
 		SuccessFGColor: successColor,
 		SuccessBGColor: ct.None,
@@ -35,19 +35,22 @@ func AddColor(successColor, warnColor, infoColor, errorColor ct.Color, ui UI) *C
 		ErrorBGColor:   ct.None,
 		WarnFGColor:    warnColor,
 		WarnBGColor:    ct.None,
+		RunningFGColor: runningColor,
+		RunningBGColor: ct.None,
 		UI:             ui,
 	}
 }
 
 // AddPrefix returns a PrefixUI for use
-func AddPrefix(logPre, outputPre, successPre, warnPre, infoPre, errorPre string, ui UI) *PrefixUI {
+func AddPrefix(logPre, outputPre, successPre, infoPre, errorPre, warnPre, runningPre string, ui UI) *PrefixUI {
 	return &PrefixUI{
 		LogPrefix:     logPre,
 		OutputPrefix:  outputPre,
 		SuccessPrefix: successPre,
-		WarnPrefix:    warnPre,
 		InfoPrefix:    infoPre,
 		ErrorPrefix:   errorPre,
+		WarnPrefix:    warnPre,
+		RunningPrefix: runningPre,
 		UI:            ui,
 	}
 }
