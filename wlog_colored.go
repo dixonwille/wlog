@@ -8,13 +8,11 @@ type ColorUI struct {
 	OutputFGColor ct.Color
 	InfoFGColor   ct.Color
 	ErrorFGColor  ct.Color
-	FatalFGColor  ct.Color
 	WarnFGColor   ct.Color
 	LogBGColor    ct.Color
 	OutputBGColor ct.Color
 	InfoBGColor   ct.Color
 	ErrorBGColor  ct.Color
-	FatalBGColor  ct.Color
 	WarnBGColor   ct.Color
 	UI            UI
 }
@@ -44,13 +42,6 @@ func (ui *ColorUI) Info(message string) {
 func (ui *ColorUI) Error(message string) {
 	ct.ChangeColor(ui.ErrorFGColor, false, ui.ErrorBGColor, false)
 	ui.UI.Error(message)
-	ct.ResetColor()
-}
-
-// Fatal prints to error in color and exits the process
-func (ui *ColorUI) Fatal(message string) {
-	ct.ChangeColor(ui.FatalFGColor, false, ui.FatalBGColor, false)
-	ui.UI.Fatal(message)
 	ct.ResetColor()
 }
 

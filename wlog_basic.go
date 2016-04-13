@@ -3,7 +3,6 @@ package wlog
 import (
 	"fmt"
 	"io"
-	"os"
 	"time"
 )
 
@@ -47,13 +46,6 @@ func (ui *BasicUI) Error(message string) {
 		fmt.Fprint(ui.Writer, message)
 		fmt.Fprint(ui.Writer, "\n")
 	}
-}
-
-// Fatal writes to Error in BasicUI
-// Also kills the process
-func (ui *BasicUI) Fatal(message string) {
-	ui.Error(message)
-	os.Exit(1)
 }
 
 // Warn writes to Error in BasicUI

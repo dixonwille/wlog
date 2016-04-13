@@ -13,9 +13,6 @@ type UI interface {
 	// Error will write to ErrorWriter.
 	// This will not kill the program.
 	Error(string)
-	// Fatal will write to ErrorWriter.
-	// This will kill the program.
-	Fatal(string)
 	// Warn will write to ErrorWriter much like Error.
 	// Reason for having two is to allow different colors or files.
 	Warn(string)

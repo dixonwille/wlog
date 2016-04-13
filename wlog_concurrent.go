@@ -37,13 +37,6 @@ func (ui *ConcurrentUI) Error(message string) {
 	ui.UI.Error(message)
 }
 
-// Fatal writes to error then closes process
-func (ui *ConcurrentUI) Fatal(message string) {
-	ui.l.Lock()
-	defer ui.l.Unlock()
-	ui.UI.Fatal(message)
-}
-
 // Warn writes to error
 func (ui *ConcurrentUI) Warn(message string) {
 	ui.l.Lock()

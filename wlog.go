@@ -31,8 +31,6 @@ func NewColor(outputColor ct.Color, errorColor ct.Color, ui UI) *ColorUI {
 		InfoBGColor:   ct.None,
 		ErrorFGColor:  errorColor,
 		ErrorBGColor:  ct.None,
-		FatalFGColor:  errorColor,
-		FatalBGColor:  ct.None,
 		WarnFGColor:   errorColor,
 		WarnBGColor:   ct.None,
 		UI:            ui,
