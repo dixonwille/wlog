@@ -54,3 +54,4 @@ On Mac it outputs to this (notice the prefix change):
 
 ## TODO
 * Add a table UI to allow a user to create a table. Use [this](https://github.com/olekukonko/tablewriter).
+* Add a simple way to split between writing to cli and file
