@@ -1,4 +1,4 @@
-# WLog
+# WLog [![Build Status](https://travis-ci.org/dixonwille/wlog.svg?branch=master)](https://travis-ci.org/dixonwille/wlog)
 This is a simple package to allow a user to print to their terminal with style.
 
 ## How I got the idea
