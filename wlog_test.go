@@ -69,3 +69,48 @@ func TestAddColor(t *testing.T) {
 		t.Error("UI was not set correctly")
 	}
 }
+
+func TestAddPrefix(t *testing.T) {
+	mock := &MockUI{
+		Reader:      os.Stdin,
+		Writer:      new(bytes.Buffer),
+		ErrorWriter: new(bytes.Buffer),
+	}
+	prefix := AddPrefix("*", "@", Check, "", Cross, "!", "~", mock)
+	if prefix.ErrorPrefix != Cross {
+		t.Error("ErrorPrefix was not set correctly")
+	}
+	if prefix.InfoPrefix != "" {
+		t.Error("InfoPrefix was not set correctly")
+	}
+	if prefix.LogPrefix != "*" {
+		t.Error("LogPrefix was not set correctly")
+	}
+	if prefix.OutputPrefix != "@" {
+		t.Error("OutputPrefix was not set correctly")
+	}
+	if prefix.RunningPrefix != "~" {
+		t.Error("RunningPrefix was not set correctly")
+	}
+	if prefix.SuccessPrefix != Check {
+		t.Error("SuccessPrefix was not set correctly")
+	}
+	if prefix.WarnPrefix != "!" {
+		t.Error("WarnPrefix was not set correctly")
+	}
+	if prefix.UI != mock {
+		t.Error("UI was not set correctly")
+	}
+}
+
+func TestAddConcurrent(t *testing.T) {
+	mock := &MockUI{
+		Reader:      os.Stdin,
+		Writer:      new(bytes.Buffer),
+		ErrorWriter: new(bytes.Buffer),
+	}
+	con := AddConcurrent(mock)
+	if con.UI != mock {
+		t.Error("UI was not set correctly")
+	}
+}
