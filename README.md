@@ -46,11 +46,11 @@ func main() {
 ```
 On Windows it outputs to this:
 
-![winss](https://gihub.com/dixonwille/wlog/raw/master/resources/winss.png)
+![winss](https://raw.githubusercontent.com/dixonwille/wlog/master/resources/winss.png)
 
 On Mac it outputs to this (notice the prefix change):
 
-![winss](https://gihub.com/dixonwille/wlog/raw/master/resources/macss.png)
+![macss](https://raw.githubusercontent.com/dixonwille/wlog/master/resources/macss.png)
 
 ## TODO
 * Add a table UI to allow a user to create a table. Use [this](https://github.com/olekukonko/tablewriter).
