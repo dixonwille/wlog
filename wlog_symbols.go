@@ -4,5 +4,5 @@ const (
 	//Check displays a checkmark
 	Check = "\u2713"
 	//Cross displays an x
-	Cross = "\u274c"
+	Cross = "\u2717"
 )
