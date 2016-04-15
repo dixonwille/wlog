@@ -54,8 +54,5 @@ On Mac it outputs to this (notice the prefix change):
 
 ## TODO
 * Add a table UI to allow a user to create a table. Use [this](https://github.com/olekukonko/tablewriter).
-<<<<<<< HEAD
 * Add a simple way to split between writing to cli and file
-=======
 * Add Ask as a function to the interface
->>>>>>> e66794cc98506601966de88c60d61fe4d7f224aa
