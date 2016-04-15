@@ -10,9 +10,9 @@ import (
 
 // MockUI is a mock UI that is used for tests and is exported publicly for use in external tests if needed as well.
 type MockUI struct {
-	InputReader  io.Reader
-	ErrorWriter  *bytes.Buffer
-	OutputWriter *bytes.Buffer
+	Reader      io.Reader
+	Writer      *bytes.Buffer
+	ErrorWriter *bytes.Buffer
 
 	once sync.Once
 }
@@ -34,24 +34,24 @@ func (u *MockUI) Info(message string) {
 func (u *MockUI) Output(message string) {
 	u.once.Do(u.init)
 
-	fmt.Fprint(u.OutputWriter, message)
-	fmt.Fprint(u.OutputWriter, "\n")
+	fmt.Fprint(u.Writer, message)
+	fmt.Fprint(u.Writer, "\n")
 }
 
 //Running prints to bytes.Buffer for testing
 func (u *MockUI) Running(message string) {
 	u.once.Do(u.init)
 
-	fmt.Fprint(u.OutputWriter, message)
-	fmt.Fprint(u.OutputWriter, "\n")
+	fmt.Fprint(u.Writer, message)
+	fmt.Fprint(u.Writer, "\n")
 }
 
 //Success prints to bytes.Buffer for testing
 func (u *MockUI) Success(message string) {
 	u.once.Do(u.init)
 
-	fmt.Fprint(u.OutputWriter, message)
-	fmt.Fprint(u.OutputWriter, "\n")
+	fmt.Fprint(u.Writer, message)
+	fmt.Fprint(u.Writer, "\n")
 }
 
 //Warn prints to bytes.Buffer for testing
@@ -67,11 +67,11 @@ func (u *MockUI) Log(message string) {
 	u.once.Do(u.init)
 	timeString := time.Now().Format(timeFormat)
 	message = timeString + ": " + message
-	fmt.Fprint(u.OutputWriter, message)
-	fmt.Fprint(u.OutputWriter, "\n")
+	fmt.Fprint(u.Writer, message)
+	fmt.Fprint(u.Writer, "\n")
 }
 
 func (u *MockUI) init() {
 	u.ErrorWriter = new(bytes.Buffer)
-	u.OutputWriter = new(bytes.Buffer)
+	u.Writer = new(bytes.Buffer)
 }
