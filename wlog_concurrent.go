@@ -2,7 +2,7 @@ package wlog
 
 import "sync"
 
-// ConcurrentUI Wraps arround UI interface.
+// ConcurrentUI Wraps around UI interface.
 // Makes the UI concurrent.
 type ConcurrentUI struct {
 	UI UI
