@@ -56,3 +56,4 @@ On Mac it outputs to this (notice the prefix change):
 * Add a table UI to allow a user to create a table. Use [this](https://github.com/olekukonko/tablewriter).
 * Add a simple way to split between writing to cli and file
 * Add Ask as a function to the interface
+* Add Tests
