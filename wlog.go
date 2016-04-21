@@ -5,7 +5,6 @@
 package wlog
 
 //TODO:10 Add a simple way to split writer between terminal and file
-//DOING:0 Add test and examples for each wrapper
 //TODO:20 Add an Ask function
 //TODO:0 Add a TableUI
 import "io"
