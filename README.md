@@ -1,5 +1,4 @@
 # WLog [![Build Status](https://travis-ci.org/dixonwille/wlog.svg?branch=master)](https://travis-ci.org/dixonwille/wlog) [![Go Report Card](https://goreportcard.com/badge/github.com/dixonwille/wlog)](https://goreportcard.com/report/github.com/dixonwille/wlog) [![GoDoc](https://godoc.org/github.com/dixonwille/wlog?status.svg)](https://godoc.org/github.com/dixonwille/wlog)
----
 
 Package wlog creates simple to use UI structure. The UI is used to simply print
 to the screen. There a wrappers that will wrap each other to create a good
