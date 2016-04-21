@@ -34,6 +34,8 @@ func ExampleNew() {
 	// Output message
 	// Running message
 	// Success message
+	// Error message
+	// Warning message
 }
 
 func TestAddColor(t *testing.T) {
