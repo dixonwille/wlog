@@ -10,39 +10,41 @@ const (
 	timeFormat = "2006-01-02T15-04-05"
 )
 
-// BasicUI implements UI.
+// BasicUI simply writes/reads to correct input/output
 // It is not thread safe.
-// Easy to wrap own functions around.
+// Pretty simple to wrap your own functions around
 type BasicUI struct {
 	Reader      io.Reader
 	Writer      io.Writer
 	ErrorWriter io.Writer
 }
 
-// Log writes to Writer with Date-Time prefixed
+// Log prefixes to message before writing to Writer.
 func (ui *BasicUI) Log(message string) {
 	timeString := time.Now().Format(timeFormat)
 	message = timeString + ": " + message
 	ui.Output(message)
 }
 
-// Output writes to Writer in BasicUI
+// Output simply writes to Writer.
 func (ui *BasicUI) Output(message string) {
 	fmt.Fprint(ui.Writer, message)
 	fmt.Fprint(ui.Writer, "\n")
 }
 
-// Success writes to Writer in BasicUI
+// Success calls Output to write.
+// Useful when you want seperate colors or prefixes.
 func (ui *BasicUI) Success(message string) {
 	ui.Output(message)
 }
 
-// Info writes to Writer in BasicUI
+// Info calls Output to write.
+// Useful when you want seperate colors or prefixes.
 func (ui *BasicUI) Info(message string) {
 	ui.Output(message)
 }
 
-// Error writes to Error in BasicUI
+// Error writes message to ErrorWriter.
 func (ui *BasicUI) Error(message string) {
 	if ui.ErrorWriter != nil {
 		fmt.Fprint(ui.ErrorWriter, message)
@@ -53,12 +55,14 @@ func (ui *BasicUI) Error(message string) {
 	}
 }
 
-// Warn writes to Error in BasicUI
+// Warn calls Error to write.
+// Useful when you want seperate colors or prefixes.
 func (ui *BasicUI) Warn(message string) {
 	ui.Error(message)
 }
 
-// Running writes to Writer in BasicUI
+// Running calls Output to write.
+// Useful when you want seperate colors or prefixes.
 func (ui *BasicUI) Running(message string) {
 	ui.Output(message)
 }

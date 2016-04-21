@@ -1,25 +1,29 @@
 package wlog
 
-// UI is an interface for printing lines to the terminal.
-// All of these will append a new line.
+// UI simply writes to an io.Writer with a new line appended to each call.
 type UI interface {
-	// Log prefixes the string with Date-Time Info.
+	// Log prefixes to message before writing to Writer.
 	Log(string)
-	// Output is a standard output to screen.
+
+	// Output simply writes to Writer.
 	Output(string)
-	// Success is exactly like Output
-	// Reason for two is to allow different prefixes and color.
+
+	// Success calls Output to write.
+	// Useful when you want seperate colors or prefixes.
 	Success(string)
-	// Info is exactly like output.
-	// Reason for two is to allow different prefixes and color.
+
+	// Info calls Output to write.
+	// Useful when you want seperate colors or prefixes.
 	Info(string)
-	// Error will write to ErrorWriter.
-	// This will not kill the program.
+
+	// Error writes message to ErrorWriter.
 	Error(string)
-	// Warn will write to ErrorWriter much like Error.
-	// Reason for two is to allow different prefixes and color.
+
+	// Warn calls Error to write.
+	// Useful when you want seperate colors or prefixes.
 	Warn(string)
-	// Running is just like output.
-	// Reason for two is to allow different prefixes and color.
+
+	// Running calls Output to write.
+	// Useful when you want seperate colors or prefixes.
 	Running(string)
 }
