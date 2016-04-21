@@ -68,8 +68,8 @@ func (ui *ConcurrentUI) Running(message string) {
 	ui.UI.Running(message)
 }
 
-// Ask will call UI.Ask with message then wait for the user to enter in a response followed by [enter].
-// It will clean the response by removing any carrage returns and new lines that if finds.
+// Ask will call UI.Ask with message then wait for UI.Ask to return a response and/or error.
+// It will clean the response by removing any carriage returns and new lines that if finds.
 // If a message is not used ("") then it will not prompt user before waiting on a response.
 // This is a thread safe function.
 func (ui *ConcurrentUI) Ask(message string) (string, error) {

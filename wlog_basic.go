@@ -69,8 +69,9 @@ func (ui *BasicUI) Running(message string) {
 	ui.Output(message)
 }
 
-//Ask will call output with message then wait for the user to enter in a response followed by [enter].
-//It will clean the response by removing any carrage returns and new lines that if finds.
+//Ask will call output with message then wait for Reader to print newline (\n).
+//If Reader is os.Stdin then that is when ever a user presses [enter].
+//It will clean the response by removing any carriage returns and new lines that if finds.
 //If a message is not used ("") then it will not prompt user before waiting on a response.
 func (ui *BasicUI) Ask(message string) (string, error) {
 	if message != "" {

@@ -85,8 +85,8 @@ func (ui *ColorUI) Running(message string) {
 	ct.ResetColor()
 }
 
-//Ask will call UI.Output with message then wait for the user to enter in a response followed by [enter].
-//It will clean the response by removing any carrage returns and new lines that if finds.
+//Ask will call UI.Output with message then wait for UI.Ask to return a response and/or error.
+//It will clean the response by removing any carriage returns and new lines that if finds.
 //If a message is not used ("") then it will not prompt user before waiting on a response.
 //AskFGColor and AskBGColor are used for message color.
 //ResponseFGColor and ResponseBGColor are used for response color.

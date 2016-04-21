@@ -48,7 +48,7 @@ var addPrefixCases = []struct {
 
 func Example() {
 	var ui UI
-	reader := strings.NewReader("User Input\r\n") //Simulate user typing User Input then pressing [enter] when reading form os.Stdin
+	reader := strings.NewReader("User Input\r\n") //Simulate user typing "User Input" then pressing [enter] when reading from os.Stdin
 	ui = New(reader, os.Stdout, os.Stdout)
 	ui = AddPrefix("?", Cross, "", "", "", "~", Check, "!", ui)
 	ui = AddConcurrent(ui)

@@ -11,7 +11,7 @@ looking UI. You can add color and prefixes as well as make it thread safe.
 
 ```go
 var ui UI
-reader := strings.NewReader("User Input\r\n") //Simulate user typing User Input then pressing [enter] when reading form os.Stdin
+reader := strings.NewReader("User Input\r\n") //Simulate user typing "User Input" then pressing [enter] when reading from os.Stdin
 ui = New(reader, os.Stdout, os.Stdout)
 ui = AddPrefix("?", Cross, "", "", "", "~", Check, "!", ui)
 ui = AddConcurrent(ui)
@@ -139,10 +139,11 @@ thread safe and should only be used in serial applications.
 ```go
 func (ui *BasicUI) Ask(message string) (string, error)
 ```
-Ask will call output with message then wait for the user to enter in a response
-followed by [enter]. It will clean the response by removing any carrage returns
-and new lines that if finds. If a message is not used ("") then it will not
-prompt user before waiting on a response.
+Ask will call output with message then wait for Reader to print newline (\n). If
+Reader is os.Stdin then that is when ever a user presses [enter]. It will clean
+the response by removing any carriage returns and new lines that if finds. If a
+message is not used ("") then it will not prompt user before waiting on a
+response.
 
 #### func (*BasicUI) Error
 
@@ -248,12 +249,11 @@ of the background colors you want. Arguments are in alphabetical order.
 ```go
 func (ui *ColorUI) Ask(message string) (string, error)
 ```
-Ask will call UI.Output with message then wait for the user to enter in a
-response followed by [enter]. It will clean the response by removing any carrage
-returns and new lines that if finds. If a message is not used ("") then it will
-not prompt user before waiting on a response. AskFGColor and AskBGColor are used
-for message color. ResponseFGColor and ResponseBGColor are used for response
-color.
+Ask will call UI.Output with message then wait for UI.Ask to return a response
+and/or error. It will clean the response by removing any carriage returns and
+new lines that if finds. If a message is not used ("") then it will not prompt
+user before waiting on a response. AskFGColor and AskBGColor are used for
+message color. ResponseFGColor and ResponseBGColor are used for response color.
 
 #### func (*ColorUI) Error
 
@@ -332,10 +332,10 @@ routines.
 ```go
 func (ui *ConcurrentUI) Ask(message string) (string, error)
 ```
-Ask will call UI.Ask with message then wait for the user to enter in a response
-followed by [enter]. It will clean the response by removing any carrage returns
-and new lines that if finds. If a message is not used ("") then it will not
-prompt user before waiting on a response. This is a thread safe function.
+Ask will call UI.Ask with message then wait for UI.Ask to return a response
+and/or error. It will clean the response by removing any carriage returns and
+new lines that if finds. If a message is not used ("") then it will not prompt
+user before waiting on a response. This is a thread safe function.
 
 #### func (*ConcurrentUI) Error
 
@@ -424,10 +424,10 @@ Arguments are in alphabetical order.
 ```go
 func (ui *PrefixUI) Ask(message string) (string, error)
 ```
-Ask will call UI.Ask with message then wait for the user to enter in a response
-followed by [enter]. It will clean the response by removing any carrage returns
-and new lines that if finds. If a message is not used ("") then it will not
-prompt user before waiting on a response. AskPrefix is used to prefix message.
+Ask will call UI.Ask with message then wait for UI.Ask to return a response
+and/or error. It will clean the response by removing any carriage returns and
+new lines that if finds. If a message is not used ("") then it will not prompt
+user before waiting on a response. AskPrefix is used to prefix message.
 
 #### func (*PrefixUI) Error
 
