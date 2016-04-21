@@ -7,6 +7,20 @@ looking UI. You can add color and prefixes as well as make it thread safe.
 ## Import
     import "github.com/dixonwille/wlog"
 
+## Idea Behind WLog
+
+I used Mitchellh's [CLI](https://github.com/mitchellh/cli) structure and
+ wrapping for the different structures. It was a clean look and feel. Plus it
+ was pretty simple to use. But I didn't want all the other cli stuff that came
+ with the package so I created this.
+
+For color I use DavidDenGCN's
+[Go-ColorText](https://github.com/daviddengcn/go-colortext). His color package
+allows for color that is available cross-platforms. I made a wrapper with all
+possible color combinations with his package. So you only have to import this
+package (one less line).
+
+
 ## Example
 
 ```go
