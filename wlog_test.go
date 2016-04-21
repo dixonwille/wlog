@@ -21,21 +21,25 @@ func TestNew(t *testing.T) {
 	}
 }
 
-func ExampleNew() {
-	basic := New(os.Stdin, os.Stdout, os.Stdout)
-	basic.Info("Info message")
-	basic.Output("Output message")
-	basic.Running("Running message")
-	basic.Success("Success message")
-	basic.Error("Error message")
-	basic.Warn("Warning message")
+func Example() {
+	var ui UI
+	ui = New(os.Stdin, os.Stdout, os.Stdout)
+	ui = AddPrefix("", "", Check, "", Cross, "!", "~", ui)
+	ui = AddConcurrent(ui)
+
+	ui.Info("Info message")
+	ui.Output("Output message")
+	ui.Running("Running message")
+	ui.Success("Success message")
+	ui.Error("Error message")
+	ui.Warn("Warning message")
 	// Output:
 	// Info message
 	// Output message
-	// Running message
-	// Success message
-	// Error message
-	// Warning message
+	// ~ Running message
+	// ✓ Success message
+	// ✗ Error message
+	// ! Warning message
 }
 
 func TestAddColor(t *testing.T) {
