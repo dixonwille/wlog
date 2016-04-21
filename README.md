@@ -8,13 +8,38 @@ looking UI. You can add color and prefixes as well as make it thread safe.
 ## Import
     import "github.com/dixonwille/wlog"
 
-## Output
+## Example
 
-On Windows it outputs to this:
+```go
+var ui UI
+ui = New(os.Stdin, os.Stdout, os.Stdout)
+ui = AddPrefix("", "", Check, "", Cross, "!", "~", ui)
+ui = AddConcurrent(ui)
+
+ui.Info("Info message")
+ui.Output("Output message")
+ui.Running("Running message")
+ui.Success("Success message")
+ui.Error("Error message")
+ui.Warn("Warning message")
+```
+
+Output:
+
+```
+Info message
+Output message
+~ Running message
+✓ Success message
+✗ Error message
+! Warning message
+```
+
+On Windows it outputs to this (this includes color):
 
 ![winss](https://raw.githubusercontent.com/dixonwille/wlog/master/resources/winss.png)
 
-On Mac it outputs to this (notice the prefix change):
+On Mac it outputs to this (this includes color):
 
 ![macss](https://raw.githubusercontent.com/dixonwille/wlog/master/resources/macss.png)
 
