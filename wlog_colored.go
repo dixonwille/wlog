@@ -4,24 +4,28 @@ import "github.com/daviddengcn/go-colortext"
 
 // ColorUI is a wrapper for UI that adds color.
 type ColorUI struct {
-	LogFGColor     Color
-	OutputFGColor  Color
-	SuccessFGColor Color
-	InfoFGColor    Color
-	ErrorFGColor   Color
-	WarnFGColor    Color
-	RunningFGColor Color
-	LogBGColor     Color
-	OutputBGColor  Color
-	SuccessBGColor Color
-	InfoBGColor    Color
-	ErrorBGColor   Color
-	WarnBGColor    Color
-	RunningBGColor Color
-	UI             UI
+	LogFGColor      Color
+	OutputFGColor   Color
+	SuccessFGColor  Color
+	InfoFGColor     Color
+	ErrorFGColor    Color
+	WarnFGColor     Color
+	RunningFGColor  Color
+	AskFGColor      Color
+	ResponseFGColor Color
+	LogBGColor      Color
+	OutputBGColor   Color
+	SuccessBGColor  Color
+	InfoBGColor     Color
+	ErrorBGColor    Color
+	WarnBGColor     Color
+	RunningBGColor  Color
+	AskBGColor      Color
+	ResponseBGColor Color
+	UI              UI
 }
 
-// Log prefixes to message before writing to Writer.
+// Log calls UI.Log to write.
 // LogFGColor and LogBGColor are used for color.
 func (ui *ColorUI) Log(message string) {
 	ct.ChangeColor(ui.LogFGColor.Code, ui.LogFGColor.Bright, ui.LogBGColor.Code, ui.LogBGColor.Bright)
@@ -29,7 +33,7 @@ func (ui *ColorUI) Log(message string) {
 	ct.ResetColor()
 }
 
-// Output simply writes to Writer.
+// Output calls UI.Output to write.
 // OutputFGColor and OutputBGColor are used for color.
 func (ui *ColorUI) Output(message string) {
 	ct.ChangeColor(ui.OutputFGColor.Code, ui.OutputFGColor.Bright, ui.OutputBGColor.Code, ui.OutputBGColor.Bright)
@@ -37,7 +41,7 @@ func (ui *ColorUI) Output(message string) {
 	ct.ResetColor()
 }
 
-// Success calls Output to write.
+// Success calls UI.Success to write.
 // Useful when you want separate colors or prefixes.
 // SuccessFGColor and SuccessBGColor are used for color.
 func (ui *ColorUI) Success(message string) {
@@ -46,7 +50,7 @@ func (ui *ColorUI) Success(message string) {
 	ct.ResetColor()
 }
 
-// Info calls Output to write.
+// Info calls UI.Info to write.
 // Useful when you want separate colors or prefixes.
 // InfoFGColor and InfoBGColor are used for color.
 func (ui *ColorUI) Info(message string) {
@@ -55,7 +59,7 @@ func (ui *ColorUI) Info(message string) {
 	ct.ResetColor()
 }
 
-// Error writes message to ErrorWriter.
+// Error calls UI.Error to write.
 // ErrorFGColor and ErrorBGColor are used for color.
 func (ui *ColorUI) Error(message string) {
 	ct.ChangeColor(ui.ErrorFGColor.Code, ui.ErrorFGColor.Bright, ui.ErrorBGColor.Code, ui.ErrorBGColor.Bright)
@@ -63,7 +67,7 @@ func (ui *ColorUI) Error(message string) {
 	ct.ResetColor()
 }
 
-// Warn calls Error to write.
+// Warn calls UI.Warn to write.
 // Useful when you want separate colors or prefixes.
 // WarnFGColor and WarnBGColor are used for color.
 func (ui *ColorUI) Warn(message string) {
@@ -72,11 +76,28 @@ func (ui *ColorUI) Warn(message string) {
 	ct.ResetColor()
 }
 
-// Running calls Output to write.
+// Running calls UI.Running to write.
 // Useful when you want separate colors or prefixes.
 // RunningFGColor and RunningBGColor are used for color.
 func (ui *ColorUI) Running(message string) {
 	ct.ChangeColor(ui.RunningFGColor.Code, ui.RunningFGColor.Bright, ui.RunningBGColor.Code, ui.RunningBGColor.Bright)
 	ui.UI.Running(message)
 	ct.ResetColor()
+}
+
+//Ask will call UI.Output with message then wait for the user to enter in a response followed by [enter].
+//It will clean the response by removing any carrage returns and new lines that if finds.
+//If a message is not used ("") then it will not prompt user before waiting on a response.
+//AskFGColor and AskBGColor are used for message color.
+//ResponseFGColor and ResponseBGColor are used for response color.
+func (ui *ColorUI) Ask(message string) (string, error) {
+	if message != "" {
+		ct.ChangeColor(ui.AskFGColor.Code, ui.AskFGColor.Bright, ui.AskBGColor.Code, ui.AskBGColor.Bright)
+		ui.UI.Output(message)
+		ct.ResetColor()
+	}
+	ct.ChangeColor(ui.ResponseFGColor.Code, ui.ResponseFGColor.Bright, ui.ResponseBGColor.Code, ui.ResponseBGColor.Bright)
+	res, err := ui.UI.Ask("")
+	ct.ResetColor()
+	return res, err
 }

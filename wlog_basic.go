@@ -1,8 +1,10 @@
 package wlog
 
 import (
+	"bufio"
 	"fmt"
 	"io"
+	"strings"
 	"time"
 )
 
@@ -65,4 +67,21 @@ func (ui *BasicUI) Warn(message string) {
 // Useful when you want separate colors or prefixes.
 func (ui *BasicUI) Running(message string) {
 	ui.Output(message)
+}
+
+//Ask will call output with message then wait for the user to enter in a response followed by [enter].
+//It will clean the response by removing any carrage returns and new lines that if finds.
+//If a message is not used ("") then it will not prompt user before waiting on a response.
+func (ui *BasicUI) Ask(message string) (string, error) {
+	if message != "" {
+		ui.Output(message)
+	}
+	reader := bufio.NewReader(ui.Reader)
+	res, err := reader.ReadString('\n')
+	if err != nil {
+		return "", err
+	}
+	res = strings.Replace(res, "\r", "", -1) //this will only be useful under windows
+	res = strings.Replace(res, "\n", "", -1)
+	return res, err
 }

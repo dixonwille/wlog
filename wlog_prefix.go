@@ -11,6 +11,7 @@ type PrefixUI struct {
 	ErrorPrefix   string
 	WarnPrefix    string
 	RunningPrefix string
+	AskPrefix     string
 	UI            UI
 }
 
@@ -79,4 +80,16 @@ func (ui *PrefixUI) Running(message string) {
 		message = ui.RunningPrefix + " " + message
 	}
 	ui.UI.Running(message)
+}
+
+//Ask will call UI.Ask with message then wait for the user to enter in a response followed by [enter].
+//It will clean the response by removing any carrage returns and new lines that if finds.
+//If a message is not used ("") then it will not prompt user before waiting on a response.
+//AskPrefix is used to prefix message.
+func (ui *PrefixUI) Ask(message string) (string, error) {
+	if ui.AskPrefix != "" {
+		message = ui.AskPrefix + " " + message
+	}
+	res, err := ui.UI.Ask(message)
+	return res, err
 }

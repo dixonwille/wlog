@@ -11,26 +11,29 @@ looking UI. You can add color and prefixes as well as make it thread safe.
 
 ```go
 var ui UI
-ui = New(os.Stdin, os.Stdout, os.Stdout)
-ui = AddPrefix("", "", Check, "", Cross, "!", "~", ui)
+reader := strings.NewReader("User Input\r\n") //Simulate user typing User Input then pressing [enter] when reading form os.Stdin
+ui = New(reader, os.Stdout, os.Stdout)
+ui = AddPrefix("?", Cross, "", "", "", "~", Check, "!", ui)
 ui = AddConcurrent(ui)
 
+ui.Ask("Ask question")
+ui.Error("Error message")
 ui.Info("Info message")
 ui.Output("Output message")
 ui.Running("Running message")
 ui.Success("Success message")
-ui.Error("Error message")
 ui.Warn("Warning message")
 ```
 
 Output:
 
 ```
+? Ask question
+✗ Error message
 Info message
 Output message
 ~ Running message
 ✓ Success message
-✗ Error message
 ! Warning message
 ```
 
@@ -93,6 +96,18 @@ var (
 	//Magenta creates a magenta color
 	Magenta = Color{ct.Magenta, false}
 
+	//White creates a white color
+	White = Color{ct.White, false}
+
+	//BrightWhite creates a bright white color
+	BrightWhite = Color{ct.White, true}
+
+	//Black creates a black color
+	Black = Color{ct.Black, false}
+
+	//BrightBlack creates a bright black color
+	BrightBlack = Color{ct.Black, true}
+
 	//None does not change the color
 	None = Color{ct.None, false}
 )
@@ -118,6 +133,16 @@ func New(reader io.Reader, writer, errorWriter io.Writer) *BasicUI
 ```
 New creates a BasicUI. This should be the first function you call. This is not
 thread safe and should only be used in serial applications.
+
+#### func (*BasicUI) Ask
+
+```go
+func (ui *BasicUI) Ask(message string) (string, error)
+```
+Ask will call output with message then wait for the user to enter in a response
+followed by [enter]. It will clean the response by removing any carrage returns
+and new lines that if finds. If a message is not used ("") then it will not
+prompt user before waiting on a response.
 
 #### func (*BasicUI) Error
 
@@ -184,21 +209,25 @@ assigning predefined colors that can be used.
 
 ```go
 type ColorUI struct {
-	LogFGColor     Color
-	OutputFGColor  Color
-	SuccessFGColor Color
-	InfoFGColor    Color
-	ErrorFGColor   Color
-	WarnFGColor    Color
-	RunningFGColor Color
-	LogBGColor     Color
-	OutputBGColor  Color
-	SuccessBGColor Color
-	InfoBGColor    Color
-	ErrorBGColor   Color
-	WarnBGColor    Color
-	RunningBGColor Color
-	UI             UI
+	LogFGColor      Color
+	OutputFGColor   Color
+	SuccessFGColor  Color
+	InfoFGColor     Color
+	ErrorFGColor    Color
+	WarnFGColor     Color
+	RunningFGColor  Color
+	AskFGColor      Color
+	ResponseFGColor Color
+	LogBGColor      Color
+	OutputBGColor   Color
+	SuccessBGColor  Color
+	InfoBGColor     Color
+	ErrorBGColor    Color
+	WarnBGColor     Color
+	RunningBGColor  Color
+	AskBGColor      Color
+	ResponseBGColor Color
+	UI              UI
 }
 ```
 
@@ -207,27 +236,38 @@ ColorUI is a wrapper for UI that adds color.
 #### func  AddColor
 
 ```go
-func AddColor(logColor, outputColor, successColor, infoColor, errorColor, warnColor, runningColor Color, ui UI) *ColorUI
+func AddColor(askColor, errorColor, infoColor, logColor, outputColor, responseColor, runningColor, successColor, warnColor Color, ui UI) *ColorUI
 ```
 AddColor will wrap a colorful UI on top of ui. Use wlog's color variables for
 the color. All background colors are not changed by this function but you are
 able to change them manually. Just create this structure manually and change any
-of the background colors you want.
+of the background colors you want. Arguments are in alphabetical order.
+
+#### func (*ColorUI) Ask
+
+```go
+func (ui *ColorUI) Ask(message string) (string, error)
+```
+Ask will call UI.Output with message then wait for the user to enter in a
+response followed by [enter]. It will clean the response by removing any carrage
+returns and new lines that if finds. If a message is not used ("") then it will
+not prompt user before waiting on a response. AskFGColor and AskBGColor are used
+for message color. ResponseFGColor and ResponseBGColor are used for response
+color.
 
 #### func (*ColorUI) Error
 
 ```go
 func (ui *ColorUI) Error(message string)
 ```
-Error writes message to ErrorWriter. ErrorFGColor and ErrorBGColor are used for
-color.
+Error calls UI.Error to write. ErrorFGColor and ErrorBGColor are used for color.
 
 #### func (*ColorUI) Info
 
 ```go
 func (ui *ColorUI) Info(message string)
 ```
-Info calls Output to write. Useful when you want separate colors or prefixes.
+Info calls UI.Info to write. Useful when you want separate colors or prefixes.
 InfoFGColor and InfoBGColor are used for color.
 
 #### func (*ColorUI) Log
@@ -235,15 +275,14 @@ InfoFGColor and InfoBGColor are used for color.
 ```go
 func (ui *ColorUI) Log(message string)
 ```
-Log prefixes to message before writing to Writer. LogFGColor and LogBGColor are
-used for color.
+Log calls UI.Log to write. LogFGColor and LogBGColor are used for color.
 
 #### func (*ColorUI) Output
 
 ```go
 func (ui *ColorUI) Output(message string)
 ```
-Output simply writes to Writer. OutputFGColor and OutputBGColor are used for
+Output calls UI.Output to write. OutputFGColor and OutputBGColor are used for
 color.
 
 #### func (*ColorUI) Running
@@ -251,23 +290,23 @@ color.
 ```go
 func (ui *ColorUI) Running(message string)
 ```
-Running calls Output to write. Useful when you want separate colors or prefixes.
-RunningFGColor and RunningBGColor are used for color.
+Running calls UI.Running to write. Useful when you want separate colors or
+prefixes. RunningFGColor and RunningBGColor are used for color.
 
 #### func (*ColorUI) Success
 
 ```go
 func (ui *ColorUI) Success(message string)
 ```
-Success calls Output to write. Useful when you want separate colors or prefixes.
-SuccessFGColor and SuccessBGColor are used for color.
+Success calls UI.Success to write. Useful when you want separate colors or
+prefixes. SuccessFGColor and SuccessBGColor are used for color.
 
 #### func (*ColorUI) Warn
 
 ```go
 func (ui *ColorUI) Warn(message string)
 ```
-Warn calls Error to write. Useful when you want separate colors or prefixes.
+Warn calls UI.Warn to write. Useful when you want separate colors or prefixes.
 WarnFGColor and WarnBGColor are used for color.
 
 #### type ConcurrentUI
@@ -288,19 +327,29 @@ func AddConcurrent(ui UI) *ConcurrentUI
 AddConcurrent will wrap a thread safe UI on top of ui. Safe to use inside of go
 routines.
 
+#### func (*ConcurrentUI) Ask
+
+```go
+func (ui *ConcurrentUI) Ask(message string) (string, error)
+```
+Ask will call UI.Ask with message then wait for the user to enter in a response
+followed by [enter]. It will clean the response by removing any carrage returns
+and new lines that if finds. If a message is not used ("") then it will not
+prompt user before waiting on a response. This is a thread safe function.
+
 #### func (*ConcurrentUI) Error
 
 ```go
 func (ui *ConcurrentUI) Error(message string)
 ```
-Error writes message to ErrorWriter. This is a thread safe function.
+Error calls UI.Error to write. This is a thread safe function.
 
 #### func (*ConcurrentUI) Info
 
 ```go
 func (ui *ConcurrentUI) Info(message string)
 ```
-Info calls Output to write. Useful when you want separate colors or prefixes.
+Info calls UI.Info to write. Useful when you want separate colors or prefixes.
 This is a thread safe function.
 
 #### func (*ConcurrentUI) Log
@@ -308,101 +357,38 @@ This is a thread safe function.
 ```go
 func (ui *ConcurrentUI) Log(message string)
 ```
-Log prefixes to message before writing to Writer. This is a thread safe
-function.
+Log calls UI.Log to write. This is a thread safe function.
 
 #### func (*ConcurrentUI) Output
 
 ```go
 func (ui *ConcurrentUI) Output(message string)
 ```
-Output simply writes to Writer. This is a thread safe function.
+Output calls UI.Output to write. This is a thread safe function.
 
 #### func (*ConcurrentUI) Running
 
 ```go
 func (ui *ConcurrentUI) Running(message string)
 ```
-Running calls Output to write. Useful when you want separate colors or prefixes.
-This is a thread safe function.
+Running calls UI.Running to write. Useful when you want separate colors or
+prefixes. This is a thread safe function.
 
 #### func (*ConcurrentUI) Success
 
 ```go
 func (ui *ConcurrentUI) Success(message string)
 ```
-Success calls Output to write. Useful when you want separate colors or prefixes.
-This is a thread safe function.
+Success calls UI.Success to write. Useful when you want separate colors or
+prefixes. This is a thread safe function.
 
 #### func (*ConcurrentUI) Warn
 
 ```go
 func (ui *ConcurrentUI) Warn(message string)
 ```
-Warn calls Error to write. Useful when you want separate colors or prefixes.
+Warn calls UI.Warn to write. Useful when you want separate colors or prefixes.
 This is a thread safe function.
-
-#### type MockUI
-
-```go
-type MockUI struct {
-	Reader      io.Reader
-	Writer      *bytes.Buffer
-	ErrorWriter *bytes.Buffer
-}
-```
-
-MockUI is a UI that is used for tests. It is exported publicly for use in
-external tests if needed as well.
-
-#### func (*MockUI) Error
-
-```go
-func (u *MockUI) Error(message string)
-```
-Error writes message to ErrorWriter.
-
-#### func (*MockUI) Info
-
-```go
-func (u *MockUI) Info(message string)
-```
-Info calls Output to write. Useful when you want separate colors or prefixes.
-
-#### func (*MockUI) Log
-
-```go
-func (u *MockUI) Log(message string)
-```
-Log prefixes to message before writing to Writer.
-
-#### func (*MockUI) Output
-
-```go
-func (u *MockUI) Output(message string)
-```
-Output simply writes to Writer.
-
-#### func (*MockUI) Running
-
-```go
-func (u *MockUI) Running(message string)
-```
-Running calls Output to write. Useful when you want separate colors or prefixes.
-
-#### func (*MockUI) Success
-
-```go
-func (u *MockUI) Success(message string)
-```
-Success calls Output to write. Useful when you want separate colors or prefixes.
-
-#### func (*MockUI) Warn
-
-```go
-func (u *MockUI) Warn(message string)
-```
-Warn calls Error to write. Useful when you want separate colors or prefixes.
 
 #### type PrefixUI
 
@@ -415,6 +401,7 @@ type PrefixUI struct {
 	ErrorPrefix   string
 	WarnPrefix    string
 	RunningPrefix string
+	AskPrefix     string
 	UI            UI
 }
 ```
@@ -426,10 +413,21 @@ prefix the space.
 #### func  AddPrefix
 
 ```go
-func AddPrefix(logPre, outputPre, successPre, infoPre, errorPre, warnPre, runningPre string, ui UI) *PrefixUI
+func AddPrefix(askPre, errorPre, infoPre, logPre, outputPre, runningPre, successPre, warnPre string, ui UI) *PrefixUI
 ```
 AddPrefix will wrap a UI that will prefix the message on top of ui. If a prefix
 is set to nothing ("") then there will be no prefix for that message type.
+Arguments are in alphabetical order.
+
+#### func (*PrefixUI) Ask
+
+```go
+func (ui *PrefixUI) Ask(message string) (string, error)
+```
+Ask will call UI.Ask with message then wait for the user to enter in a response
+followed by [enter]. It will clean the response by removing any carrage returns
+and new lines that if finds. If a message is not used ("") then it will not
+prompt user before waiting on a response. AskPrefix is used to prefix message.
 
 #### func (*PrefixUI) Error
 
@@ -489,31 +487,16 @@ WarnPrefix is used to prefix message.
 
 ```go
 type UI interface {
-	// Log prefixes to message before writing to Writer.
 	Log(string)
-
-	// Output simply writes to Writer.
 	Output(string)
-
-	// Success calls Output to write.
-	// Useful when you want separate colors or prefixes.
 	Success(string)
-
-	// Info calls Output to write.
-	// Useful when you want separate colors or prefixes.
 	Info(string)
-
-	// Error writes message to ErrorWriter.
 	Error(string)
-
-	// Warn calls Error to write.
-	// Useful when you want separate colors or prefixes.
 	Warn(string)
-
-	// Running calls Output to write.
-	// Useful when you want separate colors or prefixes.
 	Running(string)
+	Ask(string) (string, error)
 }
 ```
 
-UI simply writes to an io.Writer with a new line appended to each call.
+UI simply writes to an io.Writer with a new line appended to each call. It also
+has the ability to ask a question and return a response.

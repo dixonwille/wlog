@@ -5,7 +5,7 @@
 package wlog
 
 //TODO:10 Add a simple way to split writer between terminal and file
-//TODO:20 Add an Ask function
+//DOING:0 Add an Ask function
 //TODO:0 Add a TableUI
 import "io"
 
@@ -30,29 +30,35 @@ func AddConcurrent(ui UI) *ConcurrentUI {
 //Use wlog's color variables for the color.
 //All background colors are not changed by this function but you are able to change them manually.
 //Just create this structure manually and change any of the background colors you want.
-func AddColor(logColor, outputColor, successColor, infoColor, errorColor, warnColor, runningColor Color, ui UI) *ColorUI {
+//Arguments are in alphabetical order.
+func AddColor(askColor, errorColor, infoColor, logColor, outputColor, responseColor, runningColor, successColor, warnColor Color, ui UI) *ColorUI {
 	return &ColorUI{
-		LogFGColor:     logColor,
-		LogBGColor:     None,
-		OutputFGColor:  outputColor,
-		OutputBGColor:  None,
-		SuccessFGColor: successColor,
-		SuccessBGColor: None,
-		InfoFGColor:    infoColor,
-		InfoBGColor:    None,
-		ErrorFGColor:   errorColor,
-		ErrorBGColor:   None,
-		WarnFGColor:    warnColor,
-		WarnBGColor:    None,
-		RunningFGColor: runningColor,
-		RunningBGColor: None,
-		UI:             ui,
+		LogFGColor:      logColor,
+		LogBGColor:      None,
+		OutputFGColor:   outputColor,
+		OutputBGColor:   None,
+		SuccessFGColor:  successColor,
+		SuccessBGColor:  None,
+		InfoFGColor:     infoColor,
+		InfoBGColor:     None,
+		ErrorFGColor:    errorColor,
+		ErrorBGColor:    None,
+		WarnFGColor:     warnColor,
+		WarnBGColor:     None,
+		RunningFGColor:  runningColor,
+		RunningBGColor:  None,
+		AskFGColor:      askColor,
+		AskBGColor:      None,
+		ResponseFGColor: responseColor,
+		ResponseBGColor: None,
+		UI:              ui,
 	}
 }
 
 //AddPrefix will wrap a UI that will prefix the message on top of ui.
 //If a prefix is set to nothing ("") then there will be no prefix for that message type.
-func AddPrefix(logPre, outputPre, successPre, infoPre, errorPre, warnPre, runningPre string, ui UI) *PrefixUI {
+//Arguments are in alphabetical order.
+func AddPrefix(askPre, errorPre, infoPre, logPre, outputPre, runningPre, successPre, warnPre string, ui UI) *PrefixUI {
 	return &PrefixUI{
 		LogPrefix:     logPre,
 		OutputPrefix:  outputPre,
@@ -61,6 +67,7 @@ func AddPrefix(logPre, outputPre, successPre, infoPre, errorPre, warnPre, runnin
 		ErrorPrefix:   errorPre,
 		WarnPrefix:    warnPre,
 		RunningPrefix: runningPre,
+		AskPrefix:     askPre,
 		UI:            ui,
 	}
 }

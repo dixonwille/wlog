@@ -46,6 +46,18 @@ var (
 	//Magenta creates a magenta color
 	Magenta = Color{ct.Magenta, false}
 
+	//White creates a white color
+	White = Color{ct.White, false}
+
+	//BrightWhite creates a bright white color
+	BrightWhite = Color{ct.White, true}
+
+	//Black creates a black color
+	Black = Color{ct.Black, false}
+
+	//BrightBlack creates a bright black color
+	BrightBlack = Color{ct.Black, true}
+
 	//None does not change the color
 	None = Color{ct.None, false}
 )

@@ -8,7 +8,7 @@ type ConcurrentUI struct {
 	l  sync.Mutex
 }
 
-// Log prefixes to message before writing to Writer.
+// Log calls UI.Log to write.
 // This is a thread safe function.
 func (ui *ConcurrentUI) Log(message string) {
 	ui.l.Lock()
@@ -16,7 +16,7 @@ func (ui *ConcurrentUI) Log(message string) {
 	ui.UI.Log(message)
 }
 
-// Output simply writes to Writer.
+// Output calls UI.Output to write.
 // This is a thread safe function.
 func (ui *ConcurrentUI) Output(message string) {
 	ui.l.Lock()
@@ -24,7 +24,7 @@ func (ui *ConcurrentUI) Output(message string) {
 	ui.UI.Output(message)
 }
 
-// Success calls Output to write.
+// Success calls UI.Success to write.
 // Useful when you want separate colors or prefixes.
 // This is a thread safe function.
 func (ui *ConcurrentUI) Success(message string) {
@@ -33,7 +33,7 @@ func (ui *ConcurrentUI) Success(message string) {
 	ui.UI.Success(message)
 }
 
-// Info calls Output to write.
+// Info calls UI.Info to write.
 // Useful when you want separate colors or prefixes.
 // This is a thread safe function.
 func (ui *ConcurrentUI) Info(message string) {
@@ -42,7 +42,7 @@ func (ui *ConcurrentUI) Info(message string) {
 	ui.UI.Info(message)
 }
 
-// Error writes message to ErrorWriter.
+// Error calls UI.Error to write.
 // This is a thread safe function.
 func (ui *ConcurrentUI) Error(message string) {
 	ui.l.Lock()
@@ -50,7 +50,7 @@ func (ui *ConcurrentUI) Error(message string) {
 	ui.UI.Error(message)
 }
 
-// Warn calls Error to write.
+// Warn calls UI.Warn to write.
 // Useful when you want separate colors or prefixes.
 // This is a thread safe function.
 func (ui *ConcurrentUI) Warn(message string) {
@@ -59,11 +59,22 @@ func (ui *ConcurrentUI) Warn(message string) {
 	ui.UI.Warn(message)
 }
 
-// Running calls Output to write.
+// Running calls UI.Running to write.
 // Useful when you want separate colors or prefixes.
 // This is a thread safe function.
 func (ui *ConcurrentUI) Running(message string) {
 	ui.l.Lock()
 	defer ui.l.Unlock()
 	ui.UI.Running(message)
+}
+
+// Ask will call UI.Ask with message then wait for the user to enter in a response followed by [enter].
+// It will clean the response by removing any carrage returns and new lines that if finds.
+// If a message is not used ("") then it will not prompt user before waiting on a response.
+// This is a thread safe function.
+func (ui *ConcurrentUI) Ask(message string) (string, error) {
+	ui.l.Lock()
+	defer ui.l.Unlock()
+	res, err := ui.UI.Ask(message)
+	return res, err
 }
