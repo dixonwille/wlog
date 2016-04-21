@@ -27,7 +27,7 @@ func (u *MockUI) Error(message string) {
 }
 
 // Info calls Output to write.
-// Useful when you want seperate colors or prefixes.
+// Useful when you want separate colors or prefixes.
 func (u *MockUI) Info(message string) {
 	u.Output(message)
 }
@@ -41,7 +41,7 @@ func (u *MockUI) Output(message string) {
 }
 
 // Running calls Output to write.
-// Useful when you want seperate colors or prefixes.
+// Useful when you want separate colors or prefixes.
 func (u *MockUI) Running(message string) {
 	u.once.Do(u.init)
 
@@ -50,7 +50,7 @@ func (u *MockUI) Running(message string) {
 }
 
 // Success calls Output to write.
-// Useful when you want seperate colors or prefixes.
+// Useful when you want separate colors or prefixes.
 func (u *MockUI) Success(message string) {
 	u.once.Do(u.init)
 
@@ -59,7 +59,7 @@ func (u *MockUI) Success(message string) {
 }
 
 // Warn calls Error to write.
-// Useful when you want seperate colors or prefixes.
+// Useful when you want separate colors or prefixes.
 func (u *MockUI) Warn(message string) {
 	u.once.Do(u.init)
 

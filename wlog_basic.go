@@ -33,13 +33,13 @@ func (ui *BasicUI) Output(message string) {
 }
 
 // Success calls Output to write.
-// Useful when you want seperate colors or prefixes.
+// Useful when you want separate colors or prefixes.
 func (ui *BasicUI) Success(message string) {
 	ui.Output(message)
 }
 
 // Info calls Output to write.
-// Useful when you want seperate colors or prefixes.
+// Useful when you want separate colors or prefixes.
 func (ui *BasicUI) Info(message string) {
 	ui.Output(message)
 }
@@ -56,13 +56,13 @@ func (ui *BasicUI) Error(message string) {
 }
 
 // Warn calls Error to write.
-// Useful when you want seperate colors or prefixes.
+// Useful when you want separate colors or prefixes.
 func (ui *BasicUI) Warn(message string) {
 	ui.Error(message)
 }
 
 // Running calls Output to write.
-// Useful when you want seperate colors or prefixes.
+// Useful when you want separate colors or prefixes.
 func (ui *BasicUI) Running(message string) {
 	ui.Output(message)
 }

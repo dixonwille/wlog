@@ -33,7 +33,7 @@ func (ui *PrefixUI) Output(message string) {
 }
 
 // Success calls Output to write.
-// Useful when you want seperate colors or prefixes.
+// Useful when you want separate colors or prefixes.
 // SuccessPrefix is used to prefix the message.
 func (ui *PrefixUI) Success(message string) {
 	if ui.SuccessPrefix != "" {
@@ -43,7 +43,7 @@ func (ui *PrefixUI) Success(message string) {
 }
 
 // Info calls Output to write.
-// Useful when you want seperate colors or prefixes.
+// Useful when you want separate colors or prefixes.
 // InfoPrefix is used to prefix the message.
 func (ui *PrefixUI) Info(message string) {
 	if ui.InfoPrefix != "" {
@@ -62,7 +62,7 @@ func (ui *PrefixUI) Error(message string) {
 }
 
 // Warn calls Error to write.
-// Useful when you want seperate colors or prefixes.
+// Useful when you want separate colors or prefixes.
 // WarnPrefix is used to prefix message.
 func (ui *PrefixUI) Warn(message string) {
 	if ui.WarnPrefix != "" {
@@ -72,7 +72,7 @@ func (ui *PrefixUI) Warn(message string) {
 }
 
 // Running calls Output to write.
-// Useful when you want seperate colors or prefixes.
+// Useful when you want separate colors or prefixes.
 // RunningPrefix is used to prefix message.
 func (ui *PrefixUI) Running(message string) {
 	if ui.RunningPrefix != "" {

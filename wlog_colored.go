@@ -38,7 +38,7 @@ func (ui *ColorUI) Output(message string) {
 }
 
 // Success calls Output to write.
-// Useful when you want seperate colors or prefixes.
+// Useful when you want separate colors or prefixes.
 // SuccessFGColor and SuccessBGColor are used for color.
 func (ui *ColorUI) Success(message string) {
 	ct.ChangeColor(ui.SuccessFGColor.Code, ui.SuccessFGColor.Bright, ui.SuccessBGColor.Code, ui.SuccessBGColor.Bright)
@@ -47,7 +47,7 @@ func (ui *ColorUI) Success(message string) {
 }
 
 // Info calls Output to write.
-// Useful when you want seperate colors or prefixes.
+// Useful when you want separate colors or prefixes.
 // InfoFGColor and InfoBGColor are used for color.
 func (ui *ColorUI) Info(message string) {
 	ct.ChangeColor(ui.InfoFGColor.Code, ui.InfoFGColor.Bright, ui.InfoBGColor.Code, ui.InfoBGColor.Bright)
@@ -64,7 +64,7 @@ func (ui *ColorUI) Error(message string) {
 }
 
 // Warn calls Error to write.
-// Useful when you want seperate colors or prefixes.
+// Useful when you want separate colors or prefixes.
 // WarnFGColor and WarnBGColor are used for color.
 func (ui *ColorUI) Warn(message string) {
 	ct.ChangeColor(ui.WarnFGColor.Code, ui.WarnFGColor.Bright, ui.WarnBGColor.Code, ui.WarnBGColor.Bright)
@@ -73,7 +73,7 @@ func (ui *ColorUI) Warn(message string) {
 }
 
 // Running calls Output to write.
-// Useful when you want seperate colors or prefixes.
+// Useful when you want separate colors or prefixes.
 // RunningFGColor and RunningBGColor are used for color.
 func (ui *ColorUI) Running(message string) {
 	ct.ChangeColor(ui.RunningFGColor.Code, ui.RunningFGColor.Bright, ui.RunningBGColor.Code, ui.RunningBGColor.Bright)

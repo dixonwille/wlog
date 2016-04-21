@@ -25,7 +25,7 @@ func (ui *ConcurrentUI) Output(message string) {
 }
 
 // Success calls Output to write.
-// Useful when you want seperate colors or prefixes.
+// Useful when you want separate colors or prefixes.
 // This is a thread safe function.
 func (ui *ConcurrentUI) Success(message string) {
 	ui.l.Lock()
@@ -34,7 +34,7 @@ func (ui *ConcurrentUI) Success(message string) {
 }
 
 // Info calls Output to write.
-// Useful when you want seperate colors or prefixes.
+// Useful when you want separate colors or prefixes.
 // This is a thread safe function.
 func (ui *ConcurrentUI) Info(message string) {
 	ui.l.Lock()
@@ -51,7 +51,7 @@ func (ui *ConcurrentUI) Error(message string) {
 }
 
 // Warn calls Error to write.
-// Useful when you want seperate colors or prefixes.
+// Useful when you want separate colors or prefixes.
 // This is a thread safe function.
 func (ui *ConcurrentUI) Warn(message string) {
 	ui.l.Lock()
@@ -60,7 +60,7 @@ func (ui *ConcurrentUI) Warn(message string) {
 }
 
 // Running calls Output to write.
-// Useful when you want seperate colors or prefixes.
+// Useful when you want separate colors or prefixes.
 // This is a thread safe function.
 func (ui *ConcurrentUI) Running(message string) {
 	ui.l.Lock()
