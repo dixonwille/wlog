@@ -21,6 +21,21 @@ func TestNew(t *testing.T) {
 	}
 }
 
+func ExampleNew() {
+	basic := New(os.Stdin, os.Stdout, os.Stdout)
+	basic.Info("Info message")
+	basic.Output("Output message")
+	basic.Running("Running message")
+	basic.Success("Success message")
+	basic.Error("Error message")
+	basic.Warn("Warning message")
+	// Output:
+	// Info message
+	// Output message
+	// Running message
+	// Success message
+}
+
 func TestAddColor(t *testing.T) {
 	mock := &MockUI{
 		Reader:      os.Stdin,
