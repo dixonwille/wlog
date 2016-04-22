@@ -1,6 +1,7 @@
 package wlog
 
 import (
+	"bytes"
 	"io"
 	"os"
 	"strings"
@@ -44,6 +45,8 @@ var addPrefixCases = []struct {
 	war string
 }{
 	{"", "", "", "", "", "", "", ""},
+	{Cross, Check, "!", "~", "@", "#", "+", "="},
+	{"%", "^", "&", "*", "@", ":", ",", "?"},
 }
 
 func Example() {
@@ -130,4 +133,10 @@ func TestAddConcurrent(t *testing.T) {
 	basic := New(os.Stdin, os.Stdout, os.Stderr)
 	con := AddConcurrent(basic)
 	assert.Equal(t, basic, con.UI)
+}
+
+func initTest(input string) (*bytes.Buffer, *bytes.Buffer, io.Reader) {
+	var b []byte
+	var e []byte
+	return bytes.NewBuffer(b), bytes.NewBuffer(e), strings.NewReader(input)
 }
