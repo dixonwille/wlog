@@ -15,7 +15,7 @@ type PrefixUI struct {
 	UI            UI
 }
 
-// Log prefixes to message before writing to Writer.
+// Log calls UI.Log to write.
 // LogPrefix is used to prefix the message.
 func (ui *PrefixUI) Log(message string) {
 	if ui.LogPrefix != "" {
@@ -24,7 +24,7 @@ func (ui *PrefixUI) Log(message string) {
 	ui.UI.Log(message)
 }
 
-// Output simply writes to Writer.
+// Output calls UI.Output to write.
 // OutputPrefix is used to prefix the message.
 func (ui *PrefixUI) Output(message string) {
 	if ui.OutputPrefix != "" {
@@ -33,27 +33,27 @@ func (ui *PrefixUI) Output(message string) {
 	ui.UI.Output(message)
 }
 
-// Success calls Output to write.
+// Success calls UI.Success to write.
 // Useful when you want separate colors or prefixes.
 // SuccessPrefix is used to prefix the message.
 func (ui *PrefixUI) Success(message string) {
 	if ui.SuccessPrefix != "" {
 		message = ui.SuccessPrefix + " " + message
 	}
-	ui.UI.Output(message)
+	ui.UI.Success(message)
 }
 
-// Info calls Output to write.
+// Info calls UI.Info to write.
 // Useful when you want separate colors or prefixes.
 // InfoPrefix is used to prefix the message.
 func (ui *PrefixUI) Info(message string) {
 	if ui.InfoPrefix != "" {
 		message = ui.InfoPrefix + " " + message
 	}
-	ui.UI.Output(message)
+	ui.UI.Info(message)
 }
 
-// Error writes message to ErrorWriter.
+// Error call UI.Error to write.
 // ErrorPrefix is used to prefix the message.
 func (ui *PrefixUI) Error(message string) {
 	if ui.ErrorPrefix != "" {
@@ -62,7 +62,7 @@ func (ui *PrefixUI) Error(message string) {
 	ui.UI.Error(message)
 }
 
-// Warn calls Error to write.
+// Warn calls UI.Warn to write.
 // Useful when you want separate colors or prefixes.
 // WarnPrefix is used to prefix message.
 func (ui *PrefixUI) Warn(message string) {
