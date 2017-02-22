@@ -5,7 +5,12 @@ to the screen. There a wrappers that will wrap each other to create a good
 looking UI. You can add color and prefixes as well as make it thread safe.
 
 ## Import
-    import "github.com/dixonwille/wlog"
+
+It is recommended to use `govendor` or any vendoring tool allowing you to specify which version of this package you would like to use.
+
+```go
+import "github.com/dixonwille/wlog"
+```
 
 ## Idea Behind WLog
 
