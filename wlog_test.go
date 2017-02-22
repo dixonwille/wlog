@@ -45,18 +45,30 @@ var addPrefixCases = []struct {
 	war string
 }{
 	{"", "", "", "", "", "", "", ""},
+	{" ", " ", " ", " ", " ", " ", " ", " "},
+	{"  ", "  ", "  ", "  ", "  ", "  ", "  ", "  "},
 	{Cross, Check, "!", "~", "@", "#", "+", "="},
 	{"%", "^", "&", "*", "@", ":", ",", "?"},
+}
+
+var trimCases = []struct {
+	input string
+	trim  string
+}{
+	{" 123 \r\n", " "},
+	{"  123 \r\n", " "},
+	{"!!123!!\r\n", "!"},
+	{" !!123!! \r\n", "! "},
 }
 
 func Example() {
 	var ui UI
 	reader := strings.NewReader("User Input\r\n") //Simulate user typing "User Input" then pressing [enter] when reading from os.Stdin
 	ui = New(reader, os.Stdout, os.Stdout)
-	ui = AddPrefix("?", Cross, "", "", "", "~", Check, "!", ui)
+	ui = AddPrefix("?", Cross, " ", "", "", "~", Check, "!", ui)
 	ui = AddConcurrent(ui)
 
-	ui.Ask("Ask question")
+	ui.Ask("Ask question", " ")
 	ui.Error("Error message")
 	ui.Info("Info message")
 	ui.Output("Output message")
@@ -67,7 +79,7 @@ func Example() {
 	// Output:
 	// ? Ask question
 	// ✗ Error message
-	// Info message
+	//  Info message
 	// Output message
 	// ~ Running message
 	// ✓ Success message
@@ -82,6 +94,30 @@ func TestNew(t *testing.T) {
 		assert.Equal(c.in, basic.Reader)
 		assert.Equal(c.out, basic.Writer)
 		assert.Equal(c.err, basic.ErrorWriter)
+	}
+}
+
+func TestAskTrim(t *testing.T) {
+	assert := assert.New(t)
+	for _, c := range trimCases {
+		writer, errWriter, in := initTest(c.input)
+		basic := New(in, writer, errWriter)
+		res, err := basic.Ask("Awesome string", c.trim)
+		if err != nil {
+			assert.Fail(err.Error())
+		}
+		out, err := writer.ReadString((byte)('\n'))
+		if err != nil {
+			assert.Fail(err.Error())
+		}
+		_, err = errWriter.ReadString((byte)('\n'))
+		expectedString := "Awesome string\n"
+		assert.Equal("EOF", err.Error())
+		assert.Equal(expectedString, out)
+		expectedAns := strings.Replace(c.input, "\r", "", -1)
+		expectedAns = strings.Replace(expectedAns, "\n", "", -1)
+		expectedAns = strings.Trim(expectedAns, c.trim)
+		assert.Equal(expectedAns, res)
 	}
 }
 

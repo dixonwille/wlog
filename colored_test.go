@@ -111,7 +111,7 @@ func TestColoredAsk(t *testing.T) {
 		var ui UI
 		ui = New(reader, writer, errWriter)
 		ui = AddColor(c.askColor, c.errorColor, c.infoColor, c.logColor, c.outputColor, c.responseColor, c.runningColor, c.successColor, c.warnColor, ui)
-		res, err := ui.Ask("Awesome string")
+		res, err := ui.Ask("Awesome string", "")
 		if err != nil {
 			assert.Fail(err.Error())
 		}

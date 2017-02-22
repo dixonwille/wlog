@@ -87,17 +87,19 @@ func (ui *ColorUI) Running(message string) {
 
 //Ask will call UI.Output with message then wait for UI.Ask to return a response and/or error.
 //It will clean the response by removing any carriage returns and new lines that if finds.
+//Then it will trim the message using the trim variable.
+//Use and empty string to specify you do not want to trim.
 //If a message is not used ("") then it will not prompt user before waiting on a response.
 //AskFGColor and AskBGColor are used for message color.
 //ResponseFGColor and ResponseBGColor are used for response color.
-func (ui *ColorUI) Ask(message string) (string, error) {
+func (ui *ColorUI) Ask(message, trim string) (string, error) {
 	if message != "" {
 		ct.ChangeColor(ui.AskFGColor.Code, ui.AskFGColor.Bright, ui.AskBGColor.Code, ui.AskBGColor.Bright)
 		ui.UI.Output(message)
 		ct.ResetColor()
 	}
 	ct.ChangeColor(ui.ResponseFGColor.Code, ui.ResponseFGColor.Bright, ui.ResponseBGColor.Code, ui.ResponseBGColor.Bright)
-	res, err := ui.UI.Ask("")
+	res, err := ui.UI.Ask("", trim)
 	ct.ResetColor()
 	return res, err
 }

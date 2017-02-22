@@ -10,5 +10,5 @@ type UI interface {
 	Error(string)
 	Warn(string)
 	Running(string)
-	Ask(string) (string, error)
+	Ask(string, string) (string, error)
 }

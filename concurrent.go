@@ -70,11 +70,13 @@ func (ui *ConcurrentUI) Running(message string) {
 
 // Ask will call UI.Ask with message then wait for UI.Ask to return a response and/or error.
 // It will clean the response by removing any carriage returns and new lines that if finds.
+//Then it will trim the message using the trim variable.
+//Use and empty string to specify you do not want to trim.
 // If a message is not used ("") then it will not prompt user before waiting on a response.
 // This is a thread safe function.
-func (ui *ConcurrentUI) Ask(message string) (string, error) {
+func (ui *ConcurrentUI) Ask(message, trim string) (string, error) {
 	ui.l.Lock()
 	defer ui.l.Unlock()
-	res, err := ui.UI.Ask(message)
+	res, err := ui.UI.Ask(message, trim)
 	return res, err
 }

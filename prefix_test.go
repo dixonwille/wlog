@@ -24,7 +24,9 @@ func TestPrefixConcurrentLog(t *testing.T) {
 		_, err = errWriter.ReadString((byte)('\n'))
 		assert.Equal("EOF", err.Error())
 		expectedString := "Awesome string\n"
-		if c.log == "" {
+		if c.log == " " {
+			expectedString = t.Format(timeFormat) + ": " + c.log + expectedString
+		} else if c.log == "" {
 			expectedString = t.Format(timeFormat) + ": " + expectedString
 		} else {
 			expectedString = t.Format(timeFormat) + ": " + c.log + " " + expectedString
@@ -48,7 +50,9 @@ func TestPrefixOutput(t *testing.T) {
 		_, err = errWriter.ReadString((byte)('\n'))
 		assert.Equal("EOF", err.Error())
 		expectedString := "Awesome string\n"
-		if c.log != "" {
+		if c.out == " " {
+			expectedString = c.out + expectedString
+		} else if c.out != "" {
 			expectedString = c.out + " " + expectedString
 		}
 		assert.Equal(expectedString, out)
@@ -70,7 +74,9 @@ func TestPrefixSuccess(t *testing.T) {
 		_, err = errWriter.ReadString((byte)('\n'))
 		assert.Equal("EOF", err.Error())
 		expectedString := "Awesome string\n"
-		if c.log != "" {
+		if c.suc == " " {
+			expectedString = c.suc + expectedString
+		} else if c.suc != "" {
 			expectedString = c.suc + " " + expectedString
 		}
 		assert.Equal(expectedString, out)
@@ -92,7 +98,9 @@ func TestPrefixInfo(t *testing.T) {
 		_, err = errWriter.ReadString((byte)('\n'))
 		assert.Equal("EOF", err.Error())
 		expectedString := "Awesome string\n"
-		if c.log != "" {
+		if c.inf == " " {
+			expectedString = c.inf + expectedString
+		} else if c.inf != "" {
 			expectedString = c.inf + " " + expectedString
 		}
 		assert.Equal(expectedString, out)
@@ -114,7 +122,9 @@ func TestPrefixRunning(t *testing.T) {
 		_, err = errWriter.ReadString((byte)('\n'))
 		assert.Equal("EOF", err.Error())
 		expectedString := "Awesome string\n"
-		if c.log != "" {
+		if c.run == " " {
+			expectedString = c.run + expectedString
+		} else if c.run != "" {
 			expectedString = c.run + " " + expectedString
 		}
 		assert.Equal(expectedString, out)
@@ -136,7 +146,9 @@ func TestPrefixError(t *testing.T) {
 		_, err = writer.ReadString((byte)('\n'))
 		assert.Equal("EOF", err.Error())
 		expectedString := "Awesome string\n"
-		if c.log != "" {
+		if c.err == " " {
+			expectedString = c.err + expectedString
+		} else if c.err != "" {
 			expectedString = c.err + " " + expectedString
 		}
 		assert.Equal(expectedString, out)
@@ -158,7 +170,9 @@ func TestPrefixWarn(t *testing.T) {
 		_, err = writer.ReadString((byte)('\n'))
 		assert.Equal("EOF", err.Error())
 		expectedString := "Awesome string\n"
-		if c.log != "" {
+		if c.war == " " {
+			expectedString = c.war + expectedString
+		} else if c.war != "" {
 			expectedString = c.war + " " + expectedString
 		}
 		assert.Equal(expectedString, out)
@@ -180,7 +194,9 @@ func TestPrefixWarnNoErrorWriter(t *testing.T) {
 		_, err = errWriter.ReadString((byte)('\n'))
 		assert.Equal("EOF", err.Error())
 		expectedString := "Awesome string\n"
-		if c.log != "" {
+		if c.war == " " {
+			expectedString = c.war + expectedString
+		} else if c.war != "" {
 			expectedString = c.war + " " + expectedString
 		}
 		assert.Equal(expectedString, out)
@@ -194,7 +210,7 @@ func TestPrefixAsk(t *testing.T) {
 		writer, errWriter, reader := initTest("345\r\n")
 		ui = New(reader, writer, errWriter)
 		ui = AddPrefix(c.ask, c.err, c.inf, c.log, c.out, c.run, c.suc, c.war, ui)
-		res, err := ui.Ask("Awesome string")
+		res, err := ui.Ask("Awesome string", "")
 		if err != nil {
 			assert.Fail(err.Error())
 		}
@@ -205,7 +221,9 @@ func TestPrefixAsk(t *testing.T) {
 		_, err = errWriter.ReadString((byte)('\n'))
 		assert.Equal("EOF", err.Error())
 		expectedString := "Awesome string\n"
-		if c.log != "" {
+		if c.ask == " " {
+			expectedString = c.ask + expectedString
+		} else if c.ask != "" {
 			expectedString = c.ask + " " + expectedString
 		}
 		assert.Equal(expectedString, out)
@@ -220,7 +238,7 @@ func TestPrefixAskError(t *testing.T) {
 		writer, errWriter, reader := initTest("")
 		ui = New(reader, writer, errWriter)
 		ui = AddPrefix(c.ask, c.err, c.inf, c.log, c.out, c.run, c.suc, c.war, ui)
-		res, err := ui.Ask("Awesome string")
+		res, err := ui.Ask("Awesome string", "")
 		if err != nil {
 			assert.Equal("EOF", err.Error())
 		}
@@ -231,7 +249,9 @@ func TestPrefixAskError(t *testing.T) {
 		_, err = errWriter.ReadString((byte)('\n'))
 		assert.Equal("EOF", err.Error())
 		expectedString := "Awesome string\n"
-		if c.log != "" {
+		if c.ask == " " {
+			expectedString = c.ask + expectedString
+		} else if c.ask != "" {
 			expectedString = c.ask + " " + expectedString
 		}
 		assert.Equal(expectedString, out)
