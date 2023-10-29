@@ -8,6 +8,16 @@ looking UI. You can add color and prefixes as well as make it thread safe.
 
 https://pkg.go.dev/github.com/dixonwille/wlog/v3
 
+## Installation
+
+WLog can be added to your go module file by running:
+
+```bash
+go get github.com/dixonwille/wlog/v3@latest
+```
+
+You can them import the library using an import statement:
+
 ```go
 import "github.com/dixonwille/wlog/v3"
 ```
@@ -25,14 +35,16 @@ allows for color that is available cross-platforms. I made a wrapper with all
 possible color combinations with his package. So you only have to import this
 package (one less line).
 
-## Example
+## Example Usage
+
+This example creates a new `wlog.UI` instance, simulates a user providing input and calls UI functions that show output. If you wish to try the example and provide your own user input you can replace the `reader` variable with a reader such as `os.Stdin` which will read from a terminal.
 
 ```go
-var ui UI
+var ui wlog.UI
 reader := strings.NewReader("User Input\r\n") //Simulate user typing "User Input" then pressing [enter] when reading from os.Stdin
-ui = New(reader, os.Stdout, os.Stdout)
-ui = AddPrefix("?", Cross, " ", "", "", "~", Check, "!", ui)
-ui = AddConcurrent(ui)
+ui = wlog.New(reader, os.Stdout, os.Stdout)
+ui = wlog.AddPrefix("?", wlog.Cross, " ", "", "", "~", wlog.Check, "!", ui)
+ui = wlog.AddConcurrent(ui)
 
 ui.Ask("Ask question", "")
 ui.Error("Error message")
@@ -62,7 +74,3 @@ On Windows it outputs to this (this includes color):
 On Mac it outputs to this (this includes color):
 
 ![macss](https://raw.githubusercontent.com/dixonwille/wlog/master/resources/macss.png)
-
-## Usage
-
-Please use the [Documentaion](https://godoc.org/github.com/dixonwille/wlog) to read more into how to use this package.
