@@ -4,19 +4,20 @@ package wlog
 // It also has the ability to ask a question and return a response.
 type UI interface {
 	// Log writes a timestamped message to the writer
-	Log(string)
+	Log(message string)
 	// Output writes a message to the writer
-	Output(string)
+	Output(message string)
 	// Success writes a message indicating an success message
-	Success(string)
+	Success(message string)
 	// Info writes a message indicating an informational message
-	Info(string)
+	Info(message string)
 	// Error writes a message indicating an error
-	Error(string)
+	Error(message string)
 	// Warn writes a message indicating a warning
-	Warn(string)
+	Warn(message string)
 	// Running writes a message indicating a process is running
-	Running(string)
+	Running(message string)
 	// Ask writes a message to the writer and reads the user's input
-	Ask(string, string) (string, error)
+	// Message is written to the writer and the response is trimmed by the trim value
+	Ask(message string, trim string) (response string, error error)
 }
