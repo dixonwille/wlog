@@ -2,6 +2,7 @@ package wlog
 
 import (
 	"bytes"
+	"fmt"
 	"io"
 	"os"
 	"strings"
@@ -19,6 +20,7 @@ var newCases = []struct {
 	{nil, nil, nil},
 	{os.Stdin, nil, os.Stderr},
 }
+
 var addColorCases = []struct {
 	logColor      Color
 	outputColor   Color
@@ -34,6 +36,7 @@ var addColorCases = []struct {
 	{None, None, None, None, None, None, None, None, None},
 	{BrightBlue, BrightGreen, BrightRed, BrightYellow, BrightCyan, BrightMagenta, BrightWhite, BrightBlack, None},
 }
+
 var addPrefixCases = []struct {
 	ask string
 	err string
@@ -63,12 +66,15 @@ var trimCases = []struct {
 
 func Example() {
 	var ui UI
-	reader := strings.NewReader("User Input\r\n") //Simulate user typing "User Input" then pressing [enter] when reading from os.Stdin
+	reader := strings.NewReader("User Input\r\n") // Simulate user typing "User Input" then pressing [enter] when reading from os.Stdin
 	ui = New(reader, os.Stdout, os.Stdout)
 	ui = AddPrefix("?", Cross, " ", "", "", "~", Check, "!", ui)
 	ui = AddConcurrent(ui)
 
-	ui.Ask("Ask question", " ")
+	_, err := ui.Ask("Ask question", " ")
+	if err != nil {
+		fmt.Println(err)
+	}
 	ui.Error("Error message")
 	ui.Info("Info message")
 	ui.Output("Output message")
@@ -84,7 +90,6 @@ func Example() {
 	// ~ Running message
 	// ✓ Success message
 	// ! Warning message
-
 }
 
 func TestNew(t *testing.T) {
