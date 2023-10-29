@@ -69,12 +69,12 @@ func (ui *BasicUI) Running(message string) {
 	ui.Output(message)
 }
 
-//Ask will call output with message then wait for Reader to print newline (\n).
-//If Reader is os.Stdin then that is when ever a user presses [enter].
-//It will clean the response by removing any carriage returns and new lines that if finds.
-//Then it will trim the message using the trim variable.
-//Use and empty string to specify you do not want to trim.
-//If a message is not used ("") then it will not prompt user before waiting on a response.
+// Ask will call output with message then wait for Reader to print newline (\n).
+// If Reader is os.Stdin then that is when ever a user presses [enter].
+// It will clean the response by removing any carriage returns and new lines that if finds.
+// Then it will trim the response using the trim variable.
+// Use an empty string to specify you do not want to trim.
+// If the message is left blank ("") then it will not prompt user before waiting on a response.
 func (ui *BasicUI) Ask(message, trim string) (string, error) {
 	if message != "" {
 		ui.Output(message)
