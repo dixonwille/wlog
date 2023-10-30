@@ -1,4 +1,4 @@
-# WLog [![Build Status](https://travis-ci.org/dixonwille/wlog.svg?branch=master)](https://travis-ci.org/dixonwille/wlog) [![Go Report Card](https://goreportcard.com/badge/github.com/dixonwille/wlog/v3)](https://goreportcard.com/report/github.com/dixonwille/wlog/v3) [![codecov](https://codecov.io/gh/dixonwille/wlog/branch/master/graph/badge.svg)](https://codecov.io/gh/dixonwille/wlog)
+# WLog[![Pull Requests](https://github.com/dixonwille/wlog/actions/workflows/pullRequests.yaml/badge.svg?event=push)](https://github.com/dixonwille/wlog/actions/workflows/pullRequests.yaml)
 
 Package wlog creates simple to use UI structure. The UI is used to simply print
 to the screen. There a wrappers that will wrap each other to create a good
