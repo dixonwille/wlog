@@ -4,5 +4,5 @@ go 1.11
 
 require (
 	github.com/daviddengcn/go-colortext v1.0.0
-	github.com/stretchr/testify v1.8.4
+	github.com/stretchr/testify v1.9.0
 )
